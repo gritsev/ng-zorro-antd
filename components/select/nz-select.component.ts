@@ -337,7 +337,7 @@ export class NzSelectComponent implements ControlValueAccessor, OnInit, AfterVie
 
   updateCdkConnectedOverlayPositions(): void {
     /** wait for input size change **/
-  //  setTimeout(() => this.cdkConnectedOverlay.overlayRef.updatePosition(), 160);
+  // // setTimeout(() => this.cdkConnectedOverlay.overlayRef.updatePosition(), 160);
   }
 
   get isSingleMode(): boolean {
