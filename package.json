@@ -41,10 +41,10 @@
   "homepage": "https://ng.ant.design",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NG-ZORRO/ng-zorro-antd"
+    "url": "https://github.com/gritsev/ng-zorro-antd"
   },
   "bugs": {
-    "url": "https://github.com/NG-ZORRO/ng-zorro-antd/issues"
+    "url": "https://github.com/gritsev/ng-zorro-antd/issues"
   },
   "dependencies": {
     "@angular/cdk": "^6.0.0",
