@@ -1,3 +1,11 @@
+#Как синхронизировать
+1. Мержим репозитории https://help.github.com/articles/syncing-a-fork/
+2. Собираем командой: npm run generate
+3. Идем в папку publish и выполняем: npm publish
+4. Идем в нужный angular проект и выполняем: npm update @a.grisevich/ng-zorro-antd
+5. Далее проверяем: ng serve
+
+
 <p align="center">
   <a href="http://ng.ant.design">
     <img width="230" src="https://img.alicdn.com/tfs/TB1FVMDosrI8KJjy0FhXXbfnpXa-200-200.svg">
