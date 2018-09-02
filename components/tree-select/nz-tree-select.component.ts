@@ -12,6 +12,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   forwardRef,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -77,7 +78,7 @@ import { NzTreeComponent } from '../tree/nz-tree.component';
 })
 export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
 
-  isInit = false;
+  private nodes = [];
   isComposing = false;
   isDestroy = true;
   inputValue = '';
@@ -107,7 +108,6 @@ export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, Afte
   @Input() nzPlaceHolder = '';
   @Input() nzDropdownStyle: { [ key: string ]: string; };
   @Input() nzDefaultExpandedKeys: string[] = [];
-  @Input() nzNodes: NzTreeNode[] = [];
   @Input() nzDisplayWith: (node: NzTreeNode) => string = (node: NzTreeNode) => node.title;
   @Output() nzOpenChange = new EventEmitter<boolean>();
   @Output() nzCleared = new EventEmitter<void>();
@@ -115,6 +115,18 @@ export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, Afte
   @Output() nzExpandChange = new EventEmitter<NzFormatEmitEvent>();
   @Output() nzTreeClick = new EventEmitter<NzFormatEmitEvent>();
   @Output() nzTreeCheckBoxChange = new EventEmitter<NzFormatEmitEvent>();
+
+  @Input()
+  set nzNodes(value: NzTreeNode[]) {
+    this.nodes = value;
+    if (this.treeRef) {
+      setTimeout(() => this.updateSelectedNodes(), 0);
+    }
+  }
+
+  get nzNodes(): NzTreeNode[] {
+    return this.nodes;
+  }
 
   @ViewChild('inputElement') inputElement: ElementRef;
   @ViewChild('treeSelect') treeSelect: ElementRef;
@@ -161,6 +173,7 @@ export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, Afte
     @Optional() @Inject(DOCUMENT) private document: any, // tslint:disable-line:no-any
     @Optional() private element: ElementRef,
     private renderer: Renderer2,
+    private cdr: ChangeDetectorRef,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef) {
   }
@@ -192,6 +205,7 @@ export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, Afte
     this.nzOpen = false;
     this.nzOpenChange.emit(this.nzOpen);
     this.updateCdkConnectedOverlayStatus();
+    this.cdr.markForCheck();
   }
 
   onKeyDownInput(e: KeyboardEvent): void {
@@ -251,6 +265,7 @@ export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, Afte
     this.portal = new TemplatePortal(this.dropdownTemplate, this.viewContainerRef);
     this.overlayRef = this.overlay.create(this.getOverlayConfig());
     this.overlayRef.attach(this.portal);
+    this.cdr.detectChanges();
     this.overlayBackdropClickSubscription = this.subscribeOverlayBackdropClick();
   }
 
@@ -422,7 +437,6 @@ export class NzTreeSelectComponent implements ControlValueAccessor, OnInit, Afte
 
   ngAfterViewInit(): void {
     this.attachOverlay();
-    this.isInit = true;
   }
 
   setDisabledState(isDisabled: boolean): void {

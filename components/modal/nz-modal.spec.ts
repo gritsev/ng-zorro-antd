@@ -1,9 +1,10 @@
 /* TODO: Sort out and rewrite for more standardized */
 
-import { Component, DebugElement, ElementRef, EventEmitter, Input, NgModule } from '@angular/core';
-import { async, fakeAsync, flush, flushMicrotasks, inject, tick, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { Component, ElementRef, EventEmitter, Input } from '@angular/core';
+import { async, fakeAsync, flush, inject, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NzButtonComponent } from '../button/nz-button.component';
@@ -15,11 +16,9 @@ import { NzI18nService } from '../i18n/nz-i18n.service';
 import { CssUnitPipe } from './css-unit.pipe';
 import { NzModalControlService } from './nz-modal-control.service';
 import { NzModalRef } from './nz-modal-ref.class';
-import { MODAL_ANIMATE_DURATION, NzModalComponent } from './nz-modal.component';
+import { NzModalComponent } from './nz-modal.component';
 import { NzModalModule } from './nz-modal.module';
 import { NzModalService } from './nz-modal.service';
-
-const WAIT_ANIMATE_TIME = MODAL_ANIMATE_DURATION + 50;
 
 describe('modal testing (legacy)', () => {
   let instance;
@@ -31,7 +30,7 @@ describe('modal testing (legacy)', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [ NzButtonModule, NzModalModule ],
+        imports: [ NoopAnimationsModule, NzButtonModule, NzModalModule ],
         declarations: [ NzDemoModalAsyncComponent ],
         providers   : [ NzMeasureScrollbarService ]
       }).compileComponents();
@@ -70,7 +69,7 @@ describe('modal testing (legacy)', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [ NzButtonModule, NzModalModule ],
+        imports: [ NoopAnimationsModule, NzButtonModule, NzModalModule ],
         declarations: [ NzDemoModalConfirmPromiseComponent ],
         providers   : [ NzMeasureScrollbarService ]
       }).compileComponents();
@@ -117,7 +116,7 @@ describe('modal testing (legacy)', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [ NzModalModule ],
+        imports: [ NoopAnimationsModule, NzModalModule ],
         declarations: [ TestBasicServiceComponent ],
         providers   : [ NzMeasureScrollbarService ]
       }).compileComponents();
@@ -188,7 +187,7 @@ describe('modal testing (legacy)', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [ NzModalModule ],
+        imports: [ NoopAnimationsModule, NzModalModule ],
         declarations: [ TestVaryServiceComponent, TestVaryServiceCustomComponent ],
         providers   : [ NzMeasureScrollbarService ]
       });
@@ -236,7 +235,7 @@ describe('modal testing (legacy)', () => {
   describe('ConfirmModal: should apply options correctly', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [ NzModalModule ],
+        imports: [ NoopAnimationsModule, NzModalModule ],
         declarations: [ TestConfirmModalComponent ],
         providers   : [ NzMeasureScrollbarService ]
       }).compileComponents();
@@ -280,6 +279,7 @@ describe('modal testing (legacy)', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
+        imports: [ NoopAnimationsModule ],
         declarations: [ CssUnitPipe, TestCssUnitPipeComponent ]
       }).compileComponents();
     }));
@@ -304,7 +304,7 @@ describe('modal testing (legacy)', () => {
 
   it('#i18n', () => {
     const injector = TestBed.configureTestingModule({
-      imports: [ NzButtonModule, NzModalModule ],
+      imports: [ NoopAnimationsModule, NzButtonModule, NzModalModule ],
       declarations: [ NzDemoModalAsyncComponent ],
       providers   : [ NzMeasureScrollbarService ]
     });
@@ -328,9 +328,10 @@ describe('NzModal', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ NzModalModule ],
-      providers   : [ NzMeasureScrollbarService ],
+      imports: [ NoopAnimationsModule, NzModalModule ],
+      providers: [ NzMeasureScrollbarService ],
       declarations: [
+        NzDemoModalBasicComponent,
         ModalByServiceComponent
       ]
     });
@@ -346,6 +347,25 @@ describe('NzModal', () => {
 
   afterEach(() => {
     overlayContainer.ngOnDestroy();
+  });
+
+  describe('basic usage', () => {
+    let fixture: ComponentFixture<NzDemoModalBasicComponent>;
+    beforeEach(() => {
+      fixture = TestBed.createComponent(NzDemoModalBasicComponent);
+    });
+
+    it('should destroy normally when the component context is over', fakeAsync(() => {
+      fixture.detectChanges();
+      tick(1000);
+      fixture.detectChanges();
+      expect(overlayContainerElement.textContent).toContain('BASIC_MODAL_TITLE');
+      fixture.componentInstance.modalAvailable = false;
+      fixture.detectChanges();
+      tick(1000);
+      fixture.detectChanges();
+      expect(overlayContainerElement.textContent).not.toContain('BASIC_MODAL_TITLE');
+    }));
   });
 
   describe('created by service', () => {
@@ -457,6 +477,22 @@ describe('NzModal', () => {
       expect(modalService.openModals.length).toBe(1);
     }));
 
+    it('should degregister a modal', fakeAsync(() => {
+      const modalRef = modalService.create();
+      const modalControl = (modalService as any).modalControl as NzModalControlService; // tslint:disable-line:no-any
+
+      fixture.detectChanges();
+      tick(600);
+      expect(modalService.openModals.length).toBe(1);
+
+      modalControl.deregisterModal(modalRef);
+      expect(modalService.openModals.length).toBe(0);
+
+      // Should nothing happened
+      modalControl.deregisterModal(modalRef);
+      expect(modalService.openModals.length).toBe(0);
+    }));
+
     it('should trigger nzOnOk/nzOnCancel', () => {
       const spyOk = jasmine.createSpy('ok spy');
       const spyCancel = jasmine.createSpy('cancel spy');
@@ -473,12 +509,41 @@ describe('NzModal', () => {
       modalRef.triggerCancel();
       expect(spyCancel).toHaveBeenCalled();
     });
+
+    it('should add/remove padding-left depends on current scrollbar (just functions mockup)', () => {
+      const modalRef = modalService.create();
+      const modalInstance = modalRef.getInstance();
+      spyOnProperty(window, 'innerHeight').and.returnValue(null); // Disable innerHeight to test another branch
+      // tslint:disable-next-line:no-string-literal
+      spyOnProperty(modalInstance['document'].body, 'scrollHeight').and.returnValue(200);
+      // tslint:disable-next-line:no-string-literal
+      spyOnProperty(modalInstance['document'].documentElement, 'clientHeight').and.returnValue(100);
+      // tslint:disable-next-line:no-string-literal
+      expect(modalInstance['hasBodyScrollBar']()).toBeTruthy();
+
+      // tslint:disable-next-line:no-string-literal
+      const spySetStyle = spyOn(modalInstance['renderer'], 'setStyle');
+      // tslint:disable-next-line:no-string-literal
+      modalInstance['changeBodyOverflow'](1);
+      expect(spySetStyle).toHaveBeenCalled();
+    });
   });
 });
 
 // -------------------------------------------
 // | Testing Components
 // -------------------------------------------
+
+@Component({
+  template: `
+    <nz-modal *ngIf="modalAvailable" nzVisible nzTitle="BASIC_MODAL_TITLE">
+      <p>content</p>
+    </nz-modal>
+  `
+})
+class NzDemoModalBasicComponent {
+  modalAvailable = true;
+}
 
 @Component({
   selector: 'nz-demo-modal-async',
@@ -658,8 +723,6 @@ class TestCssUnitPipeComponent { }
 })
 export class ModalByServiceComponent {
   nonServiceModalVisible = false;
-
-  constructor(modalControlService: NzModalControlService) {}
 }
 
 // -------------------------------------------
