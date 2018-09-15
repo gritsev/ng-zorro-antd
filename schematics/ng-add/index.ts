@@ -20,7 +20,7 @@ import { Schema } from './schema';
 const ADD_CONFIG = {
   LESS_VERSION: '^2.7.3',
   CUSTOM_THEME_PATH: 'src/theme.less',
-  COMPILED_THEME_PATH: 'node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css',
+  COMPILED_THEME_PATH: 'node_modules/@a.grisevich/ng-zorro-antd/src/ng-zorro-antd.min.css',
   BOOT_PAGE_PATH: 'src/app/app.component.html',
   BOOT_PAGE_HTML: `<!-- NG-ZORRO -->
 <a href="https://github.com/NG-ZORRO/ng-zorro-antd" target="_blank" style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;">
@@ -159,7 +159,7 @@ function downgradeLess(): (host: Tree) => Tree {
 /** 添加 ng-zorro-antd 到 package.json 的 dependencies */
 function addZorroToPackageJson(): (host: Tree) => Tree {
   return (host: Tree) => {
-    addPackageToPackageJson(host, 'dependencies', 'ng-zorro-antd', zorroVersion);
+    addPackageToPackageJson(host, 'dependencies', '@a.grisevich/ng-zorro-antd', zorroVersion);
     return host;
   };
 }

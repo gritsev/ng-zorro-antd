@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from '@a.grisevich/ng-zorro-antd';
 
 import { AppComponent } from './app.component';
 
