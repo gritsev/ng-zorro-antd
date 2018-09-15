@@ -19,7 +19,7 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "flatModuleOutFile": "index.js",
-    "flatModuleId": "ng-zorro-antd",
+    "flatModuleId": "solar-ng-zorro-antd",
     "skipTemplateCodegen": true
   }
 }

@@ -5,7 +5,7 @@ const theme = fs.readFileSync(path.resolve(__dirname, `../site_scripts/_site/src
 fs.outputFileSync(
   path.resolve(__dirname, `../schematics/utils/custom-theme.ts`),
 `export function createCustomTheme() {
-  return \`@import "../node_modules/@a.grisevich/ng-zorro-antd/src/ng-zorro-antd.less";
+  return \`@import "../node_modules/solar-ng-zorro-antd/src/ng-zorro-antd.less";
 ${theme.replace(/`/g, '\\`')}
 \`;
 }
