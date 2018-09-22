@@ -2,7 +2,7 @@
 1. Мержим репозитории https://help.github.com/articles/syncing-a-fork/
 2. Собираем командой: npm run generate
 3. Идем в папку publish и выполняем: npm publish
-4. Идем в нужный angular проект и выполняем: npm update @a.grisevich/ng-zorro-antd
+4. Идем в нужный angular проект и выполняем: npm update solar-ng-zorro-antd
 5. Далее проверяем: ng serve
 
 

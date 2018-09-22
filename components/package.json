@@ -1,5 +1,5 @@
 {
-  "name": "ng-zorro-antd",
+  "name": "solar-ng-zorro-antd",
   "version": "1.6.0",
   "license": "MIT",
   "description": "An enterprise-class UI components based on Ant Design and Angular",
@@ -15,10 +15,10 @@
   "homepage": "https://ng.ant.design",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NG-ZORRO/ng-zorro-antd"
+    "url": "https://github.com/gritsev/ng-zorro-antd"
   },
   "bugs": {
-    "url": "https://github.com/NG-ZORRO/ng-zorro-antd/issues"
+    "url": "https://github.com/gritsev/ng-zorro-antd/issues"
   },
   "dependencies": {
     "date-fns": "^1.29.0",
