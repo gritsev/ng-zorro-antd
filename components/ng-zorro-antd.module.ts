@@ -14,6 +14,7 @@ import { NzCarouselModule } from './carousel/nz-carousel.module';
 import { NzCascaderModule } from './cascader/nz-cascader.module';
 import { NzCheckboxModule } from './checkbox/nz-checkbox.module';
 import { NzCollapseModule } from './collapse/nz-collapse.module';
+import { NzWaveModule } from './core/wave/nz-wave.module';
 import { NzDatePickerModule } from './date-picker/date-picker.module';
 import { NzDividerModule } from './divider/nz-divider.module';
 import { NzDrawerModule } from './drawer/nz-drawer.module';
@@ -30,6 +31,7 @@ import { NzMenuModule } from './menu/nz-menu.module';
 import { NzMessageModule } from './message/nz-message.module';
 import { NzModalModule } from './modal/nz-modal.module';
 import { NzNotificationModule } from './notification/nz-notification.module';
+import { NzTreeSelectModule } from './tree-select/nz-tree-select.module';
 import { NzPaginationModule } from './pagination/nz-pagination.module';
 import { NzPopconfirmModule } from './popconfirm/nz-popconfirm.module';
 import { NzPopoverModule } from './popover/nz-popover.module';
@@ -37,6 +39,7 @@ import { NzProgressModule } from './progress/nz-progress.module';
 import { NzRadioModule } from './radio/nz-radio.module';
 import { NzRateModule } from './rate/nz-rate.module';
 import { NzSelectModule } from './select/nz-select.module';
+import { NzSkeletonModule } from './skeleton/nz-skeleton.module';
 import { NzSliderModule } from './slider/nz-slider.module';
 import { NzSpinModule } from './spin/nz-spin.module';
 import { NzStepsModule } from './steps/nz-steps.module';
@@ -48,10 +51,8 @@ import { NzTimePickerModule } from './time-picker/nz-time-picker.module';
 import { NzTimelineModule } from './timeline/nz-timeline.module';
 import { NzToolTipModule } from './tooltip/nz-tooltip.module';
 import { NzTransferModule } from './transfer/nz-transfer.module';
-import { NzTreeSelectModule } from './tree-select/nz-tree-select.module';
 import { NzTreeModule } from './tree/nz-tree.module';
 import { NzUploadModule } from './upload/nz-upload.module';
-import { NzWaveModule } from './core/wave/nz-wave.module';
 
 export * from './affix';
 export * from './alert';
@@ -68,7 +69,9 @@ export * from './checkbox';
 export * from './collapse';
 export * from './date-picker';
 export * from './divider';
+export * from './drawer';
 export * from './dropdown';
+export * from './drawer';
 export * from './form';
 export * from './grid';
 export * from './i18n';
@@ -96,6 +99,7 @@ export * from './auto-complete';
 export * from './message';
 export * from './time-picker';
 export * from './tooltip';
+export * from './skeleton';
 export * from './slider';
 export * from './popover';
 export * from './notification';
@@ -107,6 +111,7 @@ export * from './tree-select';
 export * from './time-picker';
 export * from './version';
 export * from './core/wave';
+export * from './core/util';
 
 @NgModule({
   exports: [
@@ -138,7 +143,6 @@ export * from './core/wave';
     NzCardModule,
     NzAvatarModule,
     NzTimelineModule,
-    NzTimePickerModule,
     NzTransferModule,
     NzCarouselModule,
     NzCollapseModule,
@@ -163,7 +167,8 @@ export * from './core/wave';
     NzTreeModule,
     NzTreeSelectModule,
     NzTimePickerModule,
-    NzWaveModule
+    NzWaveModule,
+    NzSkeletonModule
   ]
 })
 export class NgZorroAntdModule {
