@@ -2,6 +2,8 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { async, fakeAsync, tick, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { NzIconModule } from '../icon/nz-icon.module';
+
 import { NzStepComponent } from './nz-step.component';
 import { NzStepsComponent } from './nz-steps.component';
 import { NzStepsModule } from './nz-steps.module';
@@ -9,7 +11,7 @@ import { NzStepsModule } from './nz-steps.module';
 describe('steps', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports     : [ NzStepsModule ],
+      imports     : [ NzStepsModule, NzIconModule ],
       declarations: [ NzTestOuterStepsComponent, NzTestInnerStepStringComponent, NzTestInnerStepTemplateComponent, NzTestStepForComponent ]
     });
     TestBed.compileComponents();
@@ -56,15 +58,15 @@ describe('steps', () => {
     }));
     it('should title correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('0title');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('1title');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('2title');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('0title');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('1title');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('2title');
     });
     it('should description correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('0description');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('1description');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('2description');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('0description');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('1description');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('2description');
     });
     it('should icon display correct', () => {
       fixture.detectChanges();
@@ -128,9 +130,9 @@ describe('steps', () => {
       tick();
       fixture.detectChanges();
       expect(outStep.nativeElement.firstElementChild.classList.contains('ant-steps-dot')).toBe(true);
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.innerText).toBe('process0');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.innerText).toBe('wait1');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.innerText).toBe('wait2');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.innerText.trim()).toBe('process0');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.innerText.trim()).toBe('wait1');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.innerText.trim()).toBe('wait2');
       expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').lastElementChild.classList.contains('ant-steps-icon-dot')).toBe(true);
       expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').lastElementChild.classList.contains('ant-steps-icon-dot')).toBe(true);
       expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').lastElementChild.classList.contains('ant-steps-icon-dot')).toBe(true);
@@ -147,9 +149,9 @@ describe('steps', () => {
       expect(innerSteps[ 0 ].nativeElement.className).toBe('ant-steps-item ant-steps-item-process');
       expect(innerSteps[ 1 ].nativeElement.className).toBe('ant-steps-item ant-steps-item-wait');
       expect(innerSteps[ 2 ].nativeElement.className).toBe('ant-steps-item ant-steps-item-wait');
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').innerText).toBe('4');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').innerText).toBe('5');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').innerText).toBe('6');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').innerText.trim()).toBe('4');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').innerText.trim()).toBe('5');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').innerText.trim()).toBe('6');
     }));
   });
   describe('inner step string', () => {
@@ -176,15 +178,15 @@ describe('steps', () => {
     });
     it('should title display correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('title');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('title');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('title');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('title');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('title');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('title');
     });
     it('should description display correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('description');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('description');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('description');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('description');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('description');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('description');
     });
     it('should icon display correct', () => {
       fixture.detectChanges();
@@ -206,21 +208,21 @@ describe('steps', () => {
     });
     it('should title display correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('titleTemplate');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('titleTemplate');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-title').innerText).toBe('titleTemplate');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('titleTemplate');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('titleTemplate');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-title').innerText.trim()).toBe('titleTemplate');
     });
     it('should description display correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('descriptionTemplate');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('descriptionTemplate');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-description').innerText).toBe('descriptionTemplate');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('descriptionTemplate');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('descriptionTemplate');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-item-description').innerText.trim()).toBe('descriptionTemplate');
     });
     it('should icon display correct', () => {
       fixture.detectChanges();
-      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.className).toBe('anticon anticon-smile-o');
-      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.className).toBe('anticon anticon-smile-o');
-      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.className).toBe('anticon anticon-smile-o');
+      expect(innerSteps[ 0 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.className).toContain('anticon-smile-o');
+      expect(innerSteps[ 1 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.className).toContain('anticon-smile-o');
+      expect(innerSteps[ 2 ].nativeElement.querySelector('.ant-steps-icon').firstElementChild.className).toContain('anticon-smile-o');
     });
   });
   describe('step ng for', () => {
@@ -270,7 +272,7 @@ export class NzTestOuterStepsComponent {
     </nz-steps>
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
-    <ng-template #iconTemplate><i class="anticon anticon-smile-o"></i></ng-template>
+    <ng-template #iconTemplate><i nz-icon type="smile-o"></i></ng-template>
   `
 })
 export class NzTestInnerStepStringComponent {
@@ -294,7 +296,7 @@ export class NzTestInnerStepStringComponent {
     </nz-steps>
     <ng-template #titleTemplate>titleTemplate</ng-template>
     <ng-template #descriptionTemplate>descriptionTemplate</ng-template>
-    <ng-template #iconTemplate><i class="anticon anticon-smile-o"></i></ng-template>
+    <ng-template #iconTemplate><i nz-icon type="smile-o"></i></ng-template>
   `
 })
 export class NzTestInnerStepTemplateComponent {
@@ -304,12 +306,16 @@ export class NzTestInnerStepTemplateComponent {
   selector: 'nz-test-step-for',
   template: `
     <nz-steps>
-      <nz-step *ngFor="let step of steps"></nz-step>
+      <nz-step *ngFor="let step of steps;trackBy: trackById"></nz-step>
     </nz-steps>
   `
 })
 export class NzTestStepForComponent {
   steps = [ 1, 2, 3 ];
+
+  trackById(index: number): number {
+    return index;
+  }
 
   updateSteps(): void {
     this.steps.push(4);
